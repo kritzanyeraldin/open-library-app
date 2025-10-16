@@ -1,1 +1,1 @@
-export * from './useBookStore';
+export * from './use-book-store';

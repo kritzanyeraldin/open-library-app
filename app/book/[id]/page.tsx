@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { FavoriteButton } from '@/components';
 import { Params } from '@/types';
 
@@ -24,9 +26,11 @@ export default async function BookDetails({
     <main className="min-h-screen bg-[var(--background)] py-10 text-[var(--foreground)]">
       <div className="mx-auto flex max-w-6xl flex-col items-start gap-12 md:flex-row">
         {bookDetails.coverId ? (
-          <img
+          <Image
             src={`https://covers.openlibrary.org/b/id/${bookDetails.coverId}-L.jpg`}
             alt={bookDetails.title}
+            width={400}
+            height={600}
             className="w-full max-w-sm rounded-lg object-cover shadow-lg md:max-w-xs"
           />
         ) : (

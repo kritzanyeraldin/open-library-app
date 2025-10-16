@@ -1,21 +1,23 @@
 'use client';
 
+import { Suspense } from 'react';
+
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { Icon } from './Icon';
+import { Icon } from './icon';
 
 type TopBarProps = {
   title: string;
 };
 
-export const TopBar = ({ title }: TopBarProps) => {
+const TopBarContent = ({ title }: TopBarProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const q = searchParams.get('q') ?? undefined;
+  const q = searchParams.get('q') ?? '';
 
   const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
-
     const params = new URLSearchParams(searchParams.toString());
 
     if (query.length > 0) {
@@ -33,9 +35,9 @@ export const TopBar = ({ title }: TopBarProps) => {
         <button className="text-2xl font-bold">
           <Icon type="bookOpen" size={28} />
         </button>
-        <a className="text-2xl font-bold" href="/">
+        <Link className="text-2xl font-bold" href="/">
           {title}
-        </a>
+        </Link>
       </div>
 
       <form>
@@ -53,5 +55,15 @@ export const TopBar = ({ title }: TopBarProps) => {
         </div>
       </form>
     </header>
+  );
+};
+
+export const TopBar = ({ title }: TopBarProps) => {
+  return (
+    <Suspense
+      fallback={<p className="text-center text-gray-500">Cargando libros...</p>}
+    >
+      <TopBarContent title={title} />
+    </Suspense>
   );
 };

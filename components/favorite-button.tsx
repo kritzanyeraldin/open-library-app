@@ -2,8 +2,9 @@
 
 import { useBookStore } from '@/store';
 import { Book, BookDetails } from '@/types';
+import { is } from 'zod/locales';
 
-import { Icon } from './Icon';
+import { Icon } from './icon';
 
 interface FavoriteButtonProps {
   book: Book | BookDetails;
@@ -12,7 +13,8 @@ export function FavoriteButton({ book }: FavoriteButtonProps) {
   const { addFavorite, removeFavorite, isFavorite } = useBookStore();
   const isFav = isFavorite(book.id);
   const handleToggleFavorite = () => {
-    isFav ? removeFavorite(book.id) : addFavorite(book);
+    if (isFav) removeFavorite(book.id);
+    else addFavorite(book);
   };
 
   return (
